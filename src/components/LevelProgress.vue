@@ -23,7 +23,7 @@
 
     <div class="text-center mt-3">
       <div class="xp-text">{{ formattedXP }} XP</div>
-      <small class="text-muted">Total XP</small>
+      <small class="text-muted">Total XP • {{ xpToNext.toLocaleString() }} to next level</small>
     </div>
 
     <div class="text-end mt-2">
@@ -43,8 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue';
 import confetti from 'canvas-confetti';
+import { computed, ref, watch } from 'vue';
 import type { UserProfile } from '../api/mockData';
 
 const props = defineProps<{

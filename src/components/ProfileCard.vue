@@ -14,9 +14,14 @@
       />
     </div>
 
-    <!-- TODO: user info , no xp stats -->
+    <!-- User info -->
     <h2 class="h5 mb-1">{{ user?.name }}</h2>
-    <div class="level-text mt-2">Level {{ user?.level }}</div>
+    <div class="mt-2">
+      <span class="badge rounded-pill level-badge">
+        <i class="bi bi-shield-fill-check me-1"></i>
+        Level {{ user?.level ?? 1 }}
+      </span>
+    </div>
 
     <div v-if="user" class="profile-stats mt-3">
       <div class="stat-item">
@@ -40,4 +45,12 @@ defineProps<{ user: UserProfile | null }>();
 
 <style scoped>
 .card { margin-bottom: 1.5rem; }
+.level-badge {
+  background: var(--brand-gradient);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
 </style>

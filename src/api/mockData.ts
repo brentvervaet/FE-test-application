@@ -41,13 +41,10 @@ const delay = (ms: number): Promise<void> =>
 const shouldFail = (failureRate: number = 0.1): boolean =>
   Math.random() < failureRate;
 
-// XP required per level (demo configurable)
-export const XP_PER_LEVEL = 250;
-
 // ===== MOCK DATA =====
 const mockUserProfile: UserProfile = {
-  name: 'Brent Vervaet',
-  avatar_url: '/IMG_0703-min.JPG',
+  name: 'Alex Johnson',
+  avatar_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
   level: 15,
   current_xp: 1250,
   xp_to_next_level: 2000
@@ -136,10 +133,9 @@ const mockAchievements: Achievement[] = [
 
 // ===== API FUNCTIONS =====
 export const fetchUserProfile = async (): Promise<UserProfile> => {
-  // Simulate realistic network delay for profile
-  await delay(800);
+  await delay(300);
 
-  if (shouldFail(0.10)) {
+  if (shouldFail(0.05)) {
     throw new Error('Failed to fetch user profile');
   }
 
@@ -147,8 +143,7 @@ export const fetchUserProfile = async (): Promise<UserProfile> => {
 };
 
 export const fetchAchievements = async (): Promise<Achievement[]> => {
-  // Simulate realistic network delay for achievements
-  await delay(600);
+  await delay(200);
 
   if (shouldFail(0.05)) {
     throw new Error('Failed to fetch achievements');
@@ -169,15 +164,15 @@ export const addXP = async (amount: number): Promise<XPResponse> => {
   }
 
   const newXP = mockUserProfile.current_xp + amount;
-  const newLevel = Math.floor(newXP / XP_PER_LEVEL) + 1;
+  const newLevel = Math.floor(newXP / 100) + 1;
   const levelUp = newLevel > mockUserProfile.level;
 
   mockUserProfile.current_xp = newXP;
   if (levelUp) {
     mockUserProfile.level = newLevel;
-    mockUserProfile.xp_to_next_level = (newLevel * XP_PER_LEVEL) - newXP;
+    mockUserProfile.xp_to_next_level = (newLevel * 100) - newXP;
   } else {
-    mockUserProfile.xp_to_next_level = ((mockUserProfile.level * XP_PER_LEVEL) - newXP);
+    mockUserProfile.xp_to_next_level = ((mockUserProfile.level * 100) - newXP);
   }
 
   return {
@@ -190,11 +185,11 @@ export const addXP = async (amount: number): Promise<XPResponse> => {
 
 // ===== HELPER FUNCTIONS =====
 export const calculateLevel = (xp: number): number =>
-  Math.floor(xp / XP_PER_LEVEL) + 1;
+  Math.floor(xp / 100) + 1;
 
 export const calculateXPToNextLevel = (xp: number): number => {
   const currentLevel = calculateLevel(xp);
-  const xpForNextLevel = currentLevel * XP_PER_LEVEL;
+  const xpForNextLevel = currentLevel * 100;
   return xpForNextLevel - xp;
 };
 

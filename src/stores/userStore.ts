@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Achievement, UserProfile } from '../api/mockData';
-import { addXP, calculateLevel, calculateXPToNextLevel, fetchAchievements, fetchUserProfile, XP_PER_LEVEL } from '../api/mockData';
+import { addXP, calculateLevel, calculateXPToNextLevel, fetchAchievements, fetchUserProfile } from '../api/mockData';
 
 
 /**
@@ -22,8 +22,8 @@ export const useUserStore = defineStore('user', () => {
   // Computed
   const xpProgress = computed(() => {
     if (!userProfile.value) return 0;
-    const earned = userProfile.value.current_xp % XP_PER_LEVEL;
-    return Math.min(Math.max(earned / XP_PER_LEVEL, 0), 1);
+    const earned = userProfile.value.current_xp % 100;
+    return Math.min(Math.max(earned / 100, 0), 1);
   });
 
   const currentLevel = computed(() => userProfile.value?.level ?? 1);

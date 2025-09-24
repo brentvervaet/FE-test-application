@@ -32,7 +32,7 @@
               </div>
               <p class="text-muted small mb-2">{{ ach.description }}</p>
               <div class="small status" :class="ach.unlocked_at ? 'text-success' : 'text-muted'">
-                <i :class="['bi', ach.unlocked_at ? 'bi-unlock' : 'bi-lock']" class="me-1" aria-hidden="true"></i>
+                <i :class="['bi', ach.unlocked_at ? 'bi-unlock' : 'bi-lock', 'me-1']" aria-hidden="true"></i>
                 <span>
                   {{ ach.unlocked_at ? `Unlocked ${formatDate(ach.unlocked_at)}` : 'Locked' }}
                 </span>
