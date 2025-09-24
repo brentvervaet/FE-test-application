@@ -12,7 +12,9 @@ export const useUserStore = defineStore('user', () => {
   // State
   const userProfile = ref<UserProfile | null>(null);
   const achievements = ref<Achievement[]>([]);
-  const isLoading = ref(false);
+  const profileLoading = ref(false);
+  const achievementsLoading = ref(false);
+  const isLoading = computed(() => profileLoading.value || achievementsLoading.value);
   const error = ref<string | null>(null);
   // Fine-grained loading state for XP action
   const isAddingXP = ref(false);
@@ -29,8 +31,8 @@ export const useUserStore = defineStore('user', () => {
 
   // Actions
   const fetchProfile = async (suppressLoading = false) => {
-    if (!suppressLoading) isLoading.value = true;
     if (!suppressLoading) error.value = null;
+    profileLoading.value = true;
     try {
       const raw = await fetchUserProfile();
       // Normalize derived fields to ensure consistency with XP
@@ -46,13 +48,13 @@ export const useUserStore = defineStore('user', () => {
       console.error('[store] profile error', e);
       throw e;
     } finally {
-      if (!suppressLoading) isLoading.value = false;
+      profileLoading.value = false;
     }
   };
 
   const fetchUserAchievements = async (suppressLoading = false) => {
-    if (!suppressLoading) isLoading.value = true;
     if (!suppressLoading) error.value = null;
+    achievementsLoading.value = true;
     try {
       achievements.value = await fetchAchievements();
       console.debug('[store] achievements loaded', achievements.value);
@@ -61,12 +63,11 @@ export const useUserStore = defineStore('user', () => {
       console.error('[store] achievements error', e);
       throw e;
     } finally {
-      if (!suppressLoading) isLoading.value = false;
+      achievementsLoading.value = false;
     }
   };
 
   const loadAllData = async () => {
-    isLoading.value = true;
     error.value = null;
     const tasks = [fetchProfile(true), fetchUserAchievements(true)];
     const results = await Promise.allSettled(tasks);
@@ -84,7 +85,6 @@ export const useUserStore = defineStore('user', () => {
     }
 
     console.debug('[store] loadAllData results', results);
-    isLoading.value = false;
   };
 
   const gainXP = async (amount: number) => {
@@ -110,6 +110,8 @@ export const useUserStore = defineStore('user', () => {
     userProfile,
     achievements,
     isLoading,
+    profileLoading,
+    achievementsLoading,
     isAddingXP,
     error,
     // computed

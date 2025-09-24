@@ -5,13 +5,7 @@
       <button v-if="error" class="retry-btn" @click="loadAllData">Retry</button>
     </div>
 
-    <div v-if="isLoading" class="fade-in">
-      <div class="mb-3"><ProfileCardSkeleton /></div>
-      <div class="mb-3"><LevelProgressSkeleton /></div>
-      <AchievementListSkeleton />
-    </div>
-
-    <div v-else-if="error" class="error-container">
+    <div v-if="error" class="error-container">
       <div class="error-icon bi-exclamation-triangle"></div>
       <p class="mb-3">{{ error }}</p>
       <button class="retry-btn" @click="loadAllData">Try Again</button>
@@ -20,18 +14,33 @@
     <div v-else class="dashboard-content fade-in">
       <div class="row g-4">
         <div class="col-12 col-lg-4">
-          <ProfileCard :user="userProfile" />
+          <template v-if="profileLoading">
+            <ProfileCardSkeleton />
+          </template>
+          <template v-else>
+            <ProfileCard :user="userProfile" />
+          </template>
         </div>
         <div class="col-12 col-lg-8">
-          <LevelProgress
-            :user="userProfile"
-            :xpProgress="xpProgress"
-            :loading="isAddingXP"
-            @gain-xp="gainXP"
-          />
+          <template v-if="profileLoading">
+            <LevelProgressSkeleton />
+          </template>
+          <template v-else>
+            <LevelProgress
+              :user="userProfile"
+              :xpProgress="xpProgress"
+              :loading="isAddingXP"
+              @gain-xp="gainXP"
+            />
+          </template>
         </div>
         <div class="col-12">
-          <AchievementList :achievements="achievements" />
+          <template v-if="achievementsLoading">
+            <AchievementListSkeleton />
+          </template>
+          <template v-else>
+            <AchievementList :achievements="achievements" />
+          </template>
         </div>
       </div>
     </div>
@@ -39,22 +48,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 import { useUserStore } from '../stores/userStore';
-import ProfileCard from './ProfileCard.vue';
-import LevelProgress from './LevelProgress.vue';
 import AchievementList from './AchievementList.vue';
-import ProfileCardSkeleton from './ProfileCardSkeleton.vue';
-import LevelProgressSkeleton from './LevelProgressSkeleton.vue';
 import AchievementListSkeleton from './AchievementListSkeleton.vue';
+import LevelProgress from './LevelProgress.vue';
+import LevelProgressSkeleton from './LevelProgressSkeleton.vue';
+import ProfileCard from './ProfileCard.vue';
+import ProfileCardSkeleton from './ProfileCardSkeleton.vue';
 
 const userStore = useUserStore();
-const { userProfile, achievements, isLoading, isAddingXP, error, xpProgress } = storeToRefs(userStore);
-const { gainXP, loadAllData } = userStore;
+const { userProfile, achievements, profileLoading, achievementsLoading, isAddingXP, error, xpProgress } = storeToRefs(userStore);
+const { gainXP, loadAllData, fetchProfile, fetchUserAchievements } = userStore;
 
 onMounted(() => {
-  loadAllData();
+  // Load sections independently for better perceived performance
+  fetchProfile();
+  fetchUserAchievements();
 });
 
 </script>

@@ -8,6 +8,9 @@
         class="rounded-circle"
         width="96"
         height="96"
+        loading="lazy"
+        decoding="async"
+        sizes="(max-width: 576px) 72px, (max-width: 992px) 88px, 96px"
       />
     </div>
 
@@ -32,7 +35,7 @@
 <script setup lang="ts">
 import type { UserProfile } from '../api/mockData';
 
-const props = defineProps<{ user: UserProfile | null }>();
+defineProps<{ user: UserProfile | null }>();
 </script>
 
 <style scoped>
