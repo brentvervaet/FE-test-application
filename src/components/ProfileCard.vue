@@ -1,25 +1,40 @@
 <template>
-  <div class="card">
-    <!-- TODO: Add user avatar -->
+  <div class="card glassmorphism card-hover p-4 text-center">
+    <div class="avatar-container mb-3 position-relative">
+      <img
+        v-if="user"
+        :src="user.avatar_url"
+        :alt="user.name"
+        class="rounded-circle"
+        width="96"
+        height="96"
+      />
+    </div>
 
-    <!-- TODO: Add user information (name, level, etc.) -->
+    <!-- TODO: user info , no xp stats -->
+    <h2 class="h5 mb-1">{{ user?.name }}</h2>
+    <div class="level-text mt-2">Level {{ user?.level }}</div>
 
-    <!-- TODO: Add level badge -->
+    <div v-if="user" class="profile-stats mt-3">
+      <div class="stat-item">
+        <small>Current XP</small>
+        <div><strong>{{ user.current_xp }}</strong></div>
+      </div>
+      <div class="stat-item">
+        <small>To Next Level</small>
+        <div><strong>{{ user.xp_to_next_level }}</strong></div>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
-// TODO: Define props interface
-// TODO: Add props validation
-// TODO: Add component configuration
+import type { UserProfile } from '../api/mockData';
+
+const props = defineProps<{ user: UserProfile | null }>();
 </script>
 
 <style scoped>
-/* TODO: Add card styles */
-.card {
-  /* TODO: Add basic card styling */
-}
-
-/* TODO: Add avatar styles */
-/* TODO: Add level badge styles */
+.card { margin-bottom: 1.5rem; }
 </style>
