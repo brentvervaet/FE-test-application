@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Dashboard from './components/MainDashboard.vue';
+import MainDashboard from './components/MainDashboard.vue';
 </script>
 
 <template>
   <div id="app">
-    <Dashboard />
+    <MainDashboard />
   </div>
 </template>
 
