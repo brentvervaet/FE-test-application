@@ -3,10 +3,12 @@
 ## 🎯 Core Tasks to Complete
 
 ### 1. TypeScript Setup
+
 - [ ] Add proper TypeScript types to all components
 - [ ] Fix any TypeScript errors
 
 ### 2. Mock Data & API
+
 - [ ] Create mock user profile data
 - [ ] Create mock achievements array
 - [ ] Implement `fetchUserProfile()` function
@@ -15,6 +17,7 @@
 - [ ] Add realistic API delays (200-500ms)
 
 ### 3. Pinia Store
+
 - [ ] Set up basic store structure
 - [ ] Add state variables (userProfile, achievements, isLoading, error)
 - [ ] Add computed properties (totalXP, currentLevel, progressPercentage)
@@ -25,6 +28,7 @@
 - [ ] Add error handling
 
 ### 4. Dashboard Component
+
 - [ ] Import and use store
 - [ ] Add loading state display
 - [ ] Add error state display
@@ -33,6 +37,7 @@
 - [ ] Add responsive grid layout
 
 ### 5. ProfileCard Component
+
 - [ ] Define props interface
 - [ ] Display user avatar
 - [ ] Display user name
@@ -41,6 +46,7 @@
 - [ ] Make it responsive
 
 ### 6. LevelProgress Component
+
 - [ ] Define props interface
 - [ ] Display current XP
 - [ ] Display XP to next level
@@ -50,6 +56,7 @@
 - [ ] Connect to store for XP gain
 
 ### 7. AchievementList Component
+
 - [ ] Define props interface
 - [ ] Display achievements header
 - [ ] Create achievements grid
@@ -60,6 +67,7 @@
 - [ ] Make it responsive
 
 ### 8. Styling & UX
+
 - [ ] Use Bootstrap 5 classes
 - [ ] Add card styling
 - [ ] Add hover effects
@@ -69,6 +77,7 @@
 - [ ] Add error state styling
 
 ### 9. Testing & Polish
+
 - [ ] Test all functionality
 - [ ] Check responsive design
 - [ ] Verify error handling
